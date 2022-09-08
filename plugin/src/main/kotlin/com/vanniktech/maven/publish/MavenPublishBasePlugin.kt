@@ -1,8 +1,8 @@
 package com.vanniktech.maven.publish
 
+import org.gradle.api.publish.maven.plugins.MavenPublishPlugin as GradleMavenPublishPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.publish.maven.plugins.MavenPublishPlugin as GradleMavenPublishPlugin
 import org.gradle.util.VersionNumber
 
 open class MavenPublishBasePlugin : Plugin<Project> {
@@ -20,7 +20,7 @@ open class MavenPublishBasePlugin : Plugin<Project> {
 
     project.plugins.apply(GradleMavenPublishPlugin::class.java)
 
-    project.extensions.create("mavenPublishing", MavenPublishBaseExtension::class.java, project)
+    project.extensions.create("_vanniktechMavenPublishing", MavenPublishBaseExtension::class.java, project)
   }
 
   private fun Project.hasWorkingNewAndroidPublishingApi(): Boolean {

@@ -33,14 +33,17 @@ open class MavenPublishPlugin : Plugin<Project> {
   }
 }
 
-private fun Project.setCoordinates() {
-  group = project.findOptionalProperty("GROUP") ?: group
-  version = project.findOptionalProperty("VERSION_NAME") ?: version
+internal fun Project.setCoordinates(
+  artifactId: String? = project.findOptionalProperty("POM_ARTIFACT_ID"),
+  group: String? = project.findOptionalProperty("GROUP"),
+  version: String? = project.findOptionalProperty("VERSION_NAME")
+) {
+  group?.let(::setGroup)
+  version?.let(::setVersion)
 
   // Artifact id defaults to project name which is not mutable.
   // Some created publications use derived artifact ids (e.g. library, library-jvm, library-js) so it needs to be
   // replaced instead of just set.
-  val artifactId = project.findOptionalProperty("POM_ARTIFACT_ID")
   if (artifactId != null && artifactId != project.name) {
     gradlePublishing.publications
       .withType(MavenPublication::class.java)
@@ -66,7 +69,7 @@ private fun Project.setCoordinates() {
   }
 }
 
-private fun Project.configurePlatform() {
+internal fun Project.configurePlatform() {
   plugins.withId("org.jetbrains.kotlin.multiplatform") {
     baseExtension.configure(KotlinMultiplatform(defaultJavaDocOption() ?: JavadocJar.Empty()))
   }
