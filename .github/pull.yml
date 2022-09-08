@@ -1,0 +1,7 @@
+version: '1'
+rules:
+  - base: master
+    upstream: vanniktech:master
+    mergeMethod: merge
+    mergeUnstable: true # merge pull request even when the mergeable_state is not clean
+    conflictReviewers: [chachako] # on merge conflict assign a reviewer
