@@ -30,6 +30,7 @@ dependencies {
   testCompileOnly(libs.junit)
   testRuntimeOnly(libs.junit.vintage)
   testImplementation(libs.assertj)
+  testImplementation(libs.maven.model)
 }
 
 val integrationTest by tasks.registering(Test::class) {
